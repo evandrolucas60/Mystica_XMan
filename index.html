@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mistica</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+    <!--preparando svg-->
+    <!--o parametro viewBox defina a região de corte da imagem-->
+    <!--os primeiro valoros são as cordenada x e y e os dois ultimos calores são width e height-->
+    <svg class="picture" viewBox ="0 0 196 296">
+
+        <!--
+        obs:
+        SVG mask são elemento que definem a transparencia do objeto mascarado de acordo com o valor da cor dentro da mask.
+        Se a cor na mask for "white" o objeto sera visível.
+        se for "gray" o objeto sera parcialmente visível
+        se for "black" o objeto será totalmente transparente(invisível)
+        -->
+
+        <!--para definir uma Mask usamos a tag <defs> no topo do SVG com com duas tags internas umas para mascarar a mistica e a outra pra mascarar ela transformada.-->
+
+       <defs>
+
+            <filter id="distort">
+                <!--
+                    feTurbulence -> gera um padrão perlin Noise
+                    o atributo type="feturbulence" contrala o tipo de turbulence que é gerado
+                    baseFrequency contrala o tamanho
+                    numOctaves sua aspereza
+                -->
+                <feTurbulence
+                type="turbulence"
+                baseFrequency="0.08"
+                numOctaves="2"
+                result="turbulence"
+                />
+                <feDisplacementMap
+                in2="turbulence"
+                in="SourceGraphic"
+                scale="50"
+                />
+            </filter>
+
+            <mask  id="mask_mystique">
+                <g filter="url(#distort)">
+                    <rect class="mask" x="0" y="-100%" width="100%" height="100%" fill="white"/>
+                </g>
+            </mask>
+
+            <mask id="mask_transformed">
+                <g filter="url(#distort)">
+                    <rect class="mask" x="0" y="0" width="100%" height="100%" fill="white"/>
+                </g>
+            </mask>
+
+       </defs>     
+
+
+        <!--Cria o background e set a cor que escolhemos para o nosso backround-->
+        <rect id="bg-color" x="0" y="0" width="100%" height="100%" fill="#4a5eb2"/>
+
+        <!--adciona a imagem svg nas cordenadas x e y e preenchendo 100% do viewport-->
+        <image id="background" x="0" y="0" width="100%" height="100%" href="images/background.svg" />
+
+        <image id="transformed" x="0" y="0" width="100%" height="100%" mask="url(#mask_transformed)" href="images/transformed.svg"/>
+
+        <image id="mystique" x="0" y="0" width="100%" height="100%" mask="url(#mask_mystique)" href="images/mystique.svg" />
+        ,
+        <image id="transformed" x="0" y="0" width="100%" height="100%" href="images/foreground.svg" />
+
+    </svg>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js" integrity="sha512-VEBjfxWUOyzl0bAwh4gdLEaQyDYPvLrZql3pw1ifgb6fhEvZl9iDDehwHZ+dsMzA0Jfww8Xt7COSZuJ/slxc4Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./index.js"></script>
+
+   
+</body>
+</html>

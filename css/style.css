@@ -1,0 +1,22 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; 
+}
+
+body{
+    display: grid;
+    background: radial-gradient(at top, #5e4082, #3a124d);
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/*deixando o body com o display: grid
+podemos alinha a foto com o cetro usando a propriedade place-self: center */
+.picture {
+    place-self: center; 
+    max-width: 100%;
+    height: 80vh;
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5));
+}
+
